@@ -48,8 +48,6 @@ class HangmanViewController: UIViewController {
         game.guessLetter(textField.text!)
         self.guessedLabel.text = self.game.guesses()
         self.wordtoGuess.text = self.game.knownString
-        print(self.game.answer)
-        print("wrongGuesses ", wrongGuesses)
         if (!flag) {
             self.wrongGuesses += 1
         }

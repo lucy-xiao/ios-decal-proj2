@@ -51,7 +51,6 @@ class Hangman {
                 guessedCorrectly += 1
             }
         }
-        print("boolean result", result)
         return result
     }
     

@@ -18,7 +18,6 @@ class HangmanWords {
     
     func getRandomWord() -> String! {
         let ind = Int(arc4random_uniform(UInt32(words.count)))
-        print("getRandomWord() ", words.objectAtIndex(ind))
         return words.objectAtIndex(ind) as! String
     }
 

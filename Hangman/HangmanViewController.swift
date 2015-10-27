@@ -16,6 +16,7 @@ class HangmanViewController: UIViewController {
     @IBOutlet var guessButton: UIButton!
     @IBOutlet var newGameButton: UIButton!
     
+    @IBOutlet var startOverButton: UIStackView!
     @IBOutlet var image: UIImageView!
     @IBOutlet var textField: UITextField!
     @IBOutlet var guessedLabel: UILabel!
@@ -26,6 +27,8 @@ class HangmanViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.game = Hangman()
+        self.newGame()
     }
 
 
@@ -44,8 +47,10 @@ class HangmanViewController: UIViewController {
     }
     
     @IBAction func guess() {
+        print(self.game.answer)
         let flag = self.game.guessLetter(textField.text!)
-        game.guessLetter(textField.text!)
+        game.guessLetter(textField.text!.uppercaseString)
+        guessedLabel.lineBreakMode = .ByWordWrapping
         self.guessedLabel.text = self.game.guesses()
         self.wordtoGuess.text = self.game.knownString
         if (!flag) {
@@ -56,7 +61,7 @@ class HangmanViewController: UIViewController {
             self.newGame()
         }
         let defaultAction = UIAlertAction(title: "New Game", style: .Default, handler: newGameHandler)
-        if (wrongGuesses > 6) {
+        if (wrongGuesses > 5) {
             let lost = UIAlertController(title: "Hanged Man!", message: "You lost! Try again!", preferredStyle: UIAlertControllerStyle.Alert)
             lost.addAction(defaultAction)
             presentViewController(lost, animated: true, completion: nil)
@@ -70,20 +75,26 @@ class HangmanViewController: UIViewController {
     
     func displayImage(incorrect: Int) {
         if (incorrect == 0) {
-            image.image = UIImage(named: ("basic-hangman-img/hangman1.gif"))
+            image.image = UIImage(named: ("basic-hangman-img/hanged0.png"))
         } else if (incorrect == 1) {
-            image.image = UIImage(named: ("basic-hangman-img/hangman2.gif"))
+            image.image = UIImage(named: ("basic-hangman-img/hanged1.png"))
         } else if (incorrect == 2) {
-            image.image = UIImage(named: ("basic-hangman-img/hangman3.gif"))
+            image.image = UIImage(named: ("basic-hangman-img/hanged2.png"))
         } else if (incorrect == 3) {
-            image.image = UIImage(named: ("basic-hangman-img/hangman4.gif"))
+            image.image = UIImage(named: ("basic-hangman-img/hanged3.png"))
         } else if (incorrect == 4) {
-            image.image = UIImage(named: ("basic-hangman-img/hangman5.gif"))
+            image.image = UIImage(named: ("basic-hangman-img/hanged4.png"))
         } else if (incorrect == 5) {
-            image.image = UIImage(named: ("basic-hangman-img/hangman6.gif"))
+            image.image = UIImage(named: ("basic-hangman-img/hanged5.png"))
         } else if (incorrect == 6) {
-            image.image = UIImage(named: ("basic-hangman-img/hangman7.gif"))
+            image.image = UIImage(named: ("basic-hangman-img/hanged6.png"))
         }
+    }
+    
+    @IBAction func startOver() {
+        self.game.startOver()
+        self.guessedLabel.text = self.game.guesses()
+        self.wrongGuesses = 0
     }
 }
 
